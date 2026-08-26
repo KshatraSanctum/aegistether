@@ -38,6 +38,6 @@ No Docker is required. The harness runs in standalone mode.
 
 Code review via Qodo Gen was integrated from the first commit to ensure enterprise-grade safety and clean TypeScript architecture.
 
-Representative PR: [https://github.com/KshatraSanctum/aegistether/pull/1]
+Representative PR: [https://github.com/KshatraSanctum/aegistether/pull/2]
 
 Qodo Findings & Resolution: Qodo correctly identified a potential race condition in the Express server lifecycle during the approval gate callback. I refactored the /api/approve endpoint to ensure the HTTP response (res.json()) is successfully closed before the agent resumes the deployment execution thread, preventing dangling socket connections. All other minor semantic warnings were intentionally dismissed as they pertained to mock sandbox limits.
