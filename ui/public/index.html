@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Matching the muted sage/olive-gray editorial aesthetic from your reference */
       --bg-core: #c4cac7;
       --bg-card: #d3d8d5;
       --bg-darkbox: #1b1e1c;
@@ -27,185 +26,96 @@
     * { box-sizing: border-box; }
 
     body {
-      margin: 0;
-      padding: 3rem;
-      background-color: var(--bg-core);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      min-height: 100vh;
+      margin: 0; padding: 2.5rem;
+      background-color: var(--bg-core); color: var(--text-main);
+      font-family: var(--font-sans); min-height: 100vh;
     }
 
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-    }
+    .container { max-width: 1300px; margin: 0 auto; }
 
-    /* Header Styling */
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 2.5rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border-color);
     }
 
-    .logotype {
-      font-family: var(--font-serif);
-      font-size: 3rem;
-      line-height: 1;
-      font-weight: normal;
-      letter-spacing: -0.01em;
-      margin: 0;
-      color: var(--text-main);
-    }
-
+    .logotype { font-family: var(--font-serif); font-size: 2.75rem; line-height: 1; margin: 0; }
     .logotype span {
-      font-family: var(--font-sans);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      display: block;
-      color: var(--text-muted);
-      margin-top: 0.4rem;
+      font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase;
+      letter-spacing: 0.15em; display: block; color: var(--text-muted); margin-top: 0.4rem;
+    }
+
+    .header-actions {
+      display: flex; gap: 1rem; align-items: center;
     }
 
     .status-badge {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      padding: 0.5rem 1rem;
-      background: var(--text-main);
-      color: var(--bg-core);
-      border-radius: 4px;
-      letter-spacing: 0.05em;
-      font-weight: 600;
+      font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase;
+      padding: 0.5rem 1rem; background: var(--text-main); color: var(--bg-core);
+      border-radius: 4px; letter-spacing: 0.05em; font-weight: 600;
     }
 
-    /* Grid Layout */
-    .editorial-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2rem;
+    .trigger-btn {
+      cursor: pointer; background: var(--accent-rust); color: #fff; border: none; transition: opacity 0.2s;
     }
+    .trigger-btn:hover { opacity: 0.9; }
+    .trigger-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 2rem;
-    }
+    .editorial-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+
+    .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1.75rem; }
 
     .section-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      margin-bottom: 1.5rem;
-      display: flex;
-      justify-content: space-between;
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--text-muted); font-family: var(--font-mono); margin-bottom: 1.25rem;
+      display: flex; justify-content: space-between;
     }
 
-    /* Typography inside cards */
-    .card-headline {
-      font-family: var(--font-serif);
-      font-size: 2.25rem;
-      line-height: 1.1;
-      margin: 0 0 1.5rem 0;
-      color: var(--text-main);
-    }
+    .card-headline { font-family: var(--font-serif); font-size: 2rem; line-height: 1.15; margin: 0 0 1.25rem 0; }
 
-    .metrics-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
+    .metrics-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
+    .metric-box { background: rgba(255, 255, 255, 0.35); border: 1px solid var(--border-color); padding: 1rem; border-radius: 4px; }
+    .metric-label { font-size: 0.65rem; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.3rem; }
+    .metric-value { font-family: var(--font-mono); font-size: 1.35rem; font-weight: 600; }
 
-    .metric-box {
-      background: rgba(255, 255, 255, 0.35);
-      border: 1px solid var(--border-color);
-      padding: 1.25rem;
-      border-radius: 4px;
-    }
-
-    .metric-label {
-      font-size: 0.7rem;
-      font-family: var(--font-mono);
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-
-    .metric-value {
-      font-family: var(--font-mono);
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    /* Terminal Box */
     .terminal {
-      background: var(--bg-darkbox);
-      color: var(--text-light);
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      padding: 1.25rem;
-      border-radius: 4px;
-      height: 220px;
-      overflow-y: auto;
-      line-height: 1.6;
+      background: var(--bg-darkbox); color: var(--text-light); font-family: var(--font-mono);
+      font-size: 0.75rem; padding: 1rem; border-radius: 4px; height: 160px; overflow-y: auto; line-height: 1.5;
     }
+    .log-line { margin-bottom: 0.3rem; }
+    .log-tag { color: #818cf8; margin-right: 0.4rem; }
 
-    .log-line { margin-bottom: 0.35rem; }
-    .log-tag { color: #818cf8; margin-right: 0.5rem; }
-
-    /* Action Gate */
     .command-box {
-      background: var(--bg-darkbox);
-      color: #34d399;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      padding: 1rem;
-      border-radius: 4px;
-      margin-bottom: 1.5rem;
-      word-break: break-all;
+      background: var(--bg-darkbox); color: #34d399; font-family: var(--font-mono);
+      font-size: 0.8rem; padding: 0.85rem; border-radius: 4px; margin-bottom: 1.25rem; word-break: break-all;
     }
-
-    .description-text {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
+    .description-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.25rem; }
 
     .btn-action {
-      width: 100%;
-      padding: 1rem;
-      background: var(--text-main);
-      color: var(--bg-core);
-      border: none;
-      border-radius: 4px;
-      font-family: var(--font-sans);
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: background 0.2s ease;
-      display: none;
+      padding: 0.85rem; border: none; border-radius: 4px; font-family: var(--font-sans);
+      font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
+      cursor: pointer; transition: opacity 0.2s ease;
     }
+    .btn-action:hover { opacity: 0.8; }
+    .btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    .btn-action:hover {
-      background: var(--accent-rust);
-      color: #fff;
+    /* History Table Styles */
+    .table-container {
+      width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.75rem;
+      text-align: left; margin-top: 0.5rem;
     }
-
-    .btn-action:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .table-container th {
+      padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-color);
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500;
     }
+    .table-container td {
+      padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(168, 178, 174, 0.4);
+    }
+    .status-tag {
+      padding: 0.15rem 0.4rem; border-radius: 3px; font-weight: 600; display: inline-block;
+    }
+    .status-tag.resolved { background: rgba(27, 99, 58, 0.15); color: var(--accent-emerald); }
+    .status-tag.waiting { background: rgba(179, 71, 39, 0.15); color: var(--accent-rust); }
+    .status-tag.aborted { background: rgba(100, 116, 139, 0.15); color: #475569; }
   </style>
 </head>
 <body>
@@ -215,65 +125,101 @@
       <div>
         <h1 class="logotype">AegisTether <span>Autonomous SRE Bastion</span></h1>
       </div>
-      <div id="status-badge" class="status-badge">Awaiting Telemetry</div>
+      <div class="header-actions">
+        <div id="status-badge" class="status-badge">Awaiting Telemetry</div>
+        <button id="trigger-btn" class="status-badge trigger-btn">+ Simulate PagerDuty Alert</button>
+      </div>
     </header>
 
     <div class="editorial-grid">
-      <!-- Left Column: Incident Analysis -->
+      <!-- Left Box: Diagnostics -->
       <div class="card">
         <div class="section-title">
-          <span>Incident Dossier & Telemetry</span>
-          <span>TrueForge Core</span>
+          <span>Incident Dossier & Swarm Diagnostics</span>
+          <span>TrueForge Daemon</span>
         </div>
         
         <h2 class="card-headline" id="ui-headline">System operating under nominal parameters.</h2>
 
         <div class="metrics-row">
           <div class="metric-box">
-            <div class="metric-label">Error Rate (Prometheus)</div>
+            <div class="metric-label">Error Rate (Prometheus MCP)</div>
             <div class="metric-value" id="ui-error-rate">0.0%</div>
           </div>
           <div class="metric-box">
             <div class="metric-label">Offending Commit (Live GitHub)</div>
-            <div class="metric-value" id="ui-commit" style="font-size: 1rem; padding-top: 0.2rem;">Monitoring...</div>
+            <div class="metric-value" id="ui-commit" style="font-size: 0.95rem; padding-top: 0.2rem;">Monitoring...</div>
           </div>
         </div>
 
-        <div class="section-title" style="margin-bottom: 0.75rem;">
+        <div class="section-title" style="margin-bottom: 0.5rem;">
           <span>V8 Sandbox Execution Logs</span>
         </div>
         <div class="terminal" id="terminal-logs">
-          <div class="log-line"><span class="log-tag">[SYS]</span> Editorial security harness mounted.</div>
+          <div class="log-line"><span class="log-tag">[SYS]</span> Multi-agent supervisor mounted.</div>
           <div class="log-line"><span class="log-tag">[SYS]</span> Listening for incoming failure signals...</div>
         </div>
       </div>
 
-      <!-- Right Column: Human Control Gate -->
+      <!-- Right Box: Dual Control Gate -->
       <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
         <div>
           <div class="section-title">Irreversible Control Gate</div>
           <p class="description-text">
-            The TrueForge agent has completed multi-step root cause analysis and validated its script inside an isolated V8 virtual machine sandbox. Human confirmation is mandatory before executing production adjustments.
+            The TrueForge supervisor has completed multi-step root cause analysis via subagents. The remediation script below passed V8 sandbox isolation. SRE authorization is required.
           </p>
-
-          <div class="section-title" style="margin-bottom: 0.5rem;">Proposed Remediation Script</div>
+          <div class="section-title" style="margin-bottom: 0.4rem;">Proposed Remediation Script</div>
           <div class="command-box" id="ui-command">
-            // Awaiting agentic discovery...
+            // Awaiting supervisor dispatch...
           </div>
         </div>
 
-        <button id="approve-btn" class="btn-action">
-          Authorize Production Rollback
-        </button>
+        <!-- Dual Action Buttons -->
+        <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+          <button id="approve-btn" class="btn-action" style="flex: 2; display: none; background: #1b633a; color: #fff;">
+            Authorize Rollback
+          </button>
+          <button id="abort-btn" class="btn-action" style="flex: 1; display: none; background: #b34727; color: #fff;">
+            Abort / Reject
+          </button>
+        </div>
       </div>
+    </div>
+
+    <!-- Bottom Panel: Historical Incident Ledger (SQLite) -->
+    <div class="card">
+      <div class="section-title">
+        <span>Persistent Incident Audit Ledger</span>
+        <span>SQLite Engine</span>
+      </div>
+      <table class="table-container">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Timestamp</th>
+            <th>Status</th>
+            <th>Error Rate</th>
+            <th>Offending Commit</th>
+            <th>Remediation Script</th>
+          </tr>
+        </thead>
+        <tbody id="history-tbody">
+          <tr>
+            <td colspan="6" style="text-align: center; color: var(--text-muted);">Awaiting persistent incident records...</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <script>
     const terminal = document.getElementById('terminal-logs');
     const approveBtn = document.getElementById('approve-btn');
+    const abortBtn = document.getElementById('abort-btn');
+    const triggerBtn = document.getElementById('trigger-btn');
     const statusBadge = document.getElementById('status-badge');
     const headline = document.getElementById('ui-headline');
+    const historyTbody = document.getElementById('history-tbody');
 
     function appendLog(text) {
       const time = new Date().toLocaleTimeString('en-US', { hour12: false });
@@ -281,7 +227,25 @@
       terminal.scrollTop = terminal.scrollHeight;
     }
 
-    // Poll the SQLite API backend state every second
+    // Trigger Simulation Action
+    triggerBtn.addEventListener('click', async () => {
+      triggerBtn.innerText = 'Dispatching Alert...';
+      triggerBtn.disabled = true;
+      appendLog("Simulated PagerDuty webhook fired to TrueForge Daemon.");
+      
+      await fetch('/api/trigger-incident', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ alert: "CRITICAL ALERT: Ingress 5xx errors spiking on checkout-service following latest deployment." })
+      });
+
+      setTimeout(() => {
+        triggerBtn.innerText = '+ Simulate PagerDuty Alert';
+        triggerBtn.disabled = false;
+      }, 2000);
+    });
+
+    // Polling State & History
     setInterval(async () => {
       try {
         const res = await fetch('/api/state');
@@ -295,25 +259,60 @@
           statusBadge.innerText = 'Action Required: Authorization Gate';
           statusBadge.style.background = '#b34727';
           statusBadge.style.color = '#fff';
-          headline.innerText = data.rootCause || 'Critical anomaly isolated in service layer.';
+          headline.innerText = data.rootCause || 'Critical anomaly isolated by subagents.';
           approveBtn.style.display = 'block';
-        } else if (data.status === 'RESOLVED') {
-          statusBadge.innerText = 'Incident Resolved';
-          statusBadge.style.background = '#1b633a';
+          abortBtn.style.display = 'block';
+        } else if (data.status === 'RESOLVED' || data.status === 'ABORTED') {
+          statusBadge.innerText = data.status === 'RESOLVED' ? 'Incident Resolved' : 'Remediation Aborted';
+          statusBadge.style.background = data.status === 'RESOLVED' ? '#1b633a' : '#64748b';
           statusBadge.style.color = '#fff';
-          headline.innerText = 'Service stability successfully restored.';
+          headline.innerText = data.status === 'RESOLVED' ? 'Service stability successfully restored.' : 'Action rejected by SRE supervisor.';
           approveBtn.style.display = 'none';
+          abortBtn.style.display = 'none';
         }
-      } catch (e) {
-        // Silent polling catch during boot
-      }
+
+        // Fetch Audit Ledger History
+        const histRes = await fetch('/api/history');
+        const records = await histRes.json();
+        if (records && records.length > 0) {
+          historyTbody.innerHTML = records.map(r => `
+            <tr>
+              <td>#${r.id}</td>
+              <td>${r.timestamp || 'Just now'}</td>
+              <td><span class="status-tag ${r.status === 'RESOLVED' ? 'resolved' : (r.status === 'ABORTED' ? 'aborted' : 'waiting')}">${r.status}</span></td>
+              <td>${r.error_rate}</td>
+              <td>${r.offending_commit ? r.offending_commit.substring(0, 10) + '...' : 'N/A'}</td>
+              <td><code>${r.remediation_script || 'N/A'}</code></td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {}
     }, 1000);
 
+    // Approval Action
     approveBtn.addEventListener('click', async () => {
-      approveBtn.innerText = 'Dispatching Payload...';
+      approveBtn.innerText = 'Executing...';
       approveBtn.disabled = true;
-      appendLog("SRE security clearance validated. Unpausing harness execution.");
-      await fetch('/api/approve', { method: 'POST' });
+      abortBtn.disabled = true;
+      appendLog("SRE authorization verified. Executing rollback.");
+      await fetch('/api/action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'APPROVE' })
+      });
+    });
+
+    // Abort Action
+    abortBtn.addEventListener('click', async () => {
+      abortBtn.innerText = 'Aborting...';
+      approveBtn.disabled = true;
+      abortBtn.disabled = true;
+      appendLog("SRE rejection received. Aborting deployment script.");
+      await fetch('/api/action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'ABORT' })
+      });
     });
   </script>
 </body>

@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import Database from 'better-sqlite3';
+import { dispatchIncident } from '../agent/index';
 
 const app = express();
 const port = 3000;
@@ -12,16 +13,15 @@ let currentAgentState = {
   status: 'IDLE',
   errorRate: '0.0%',
   suspectedCommit: 'None',
-  rootCause: 'Waiting for telemetry alert...',
+  rootCause: 'Awaiting cluster telemetry stream...',
   remediationCommand: 'None',
-  logs: ['System initialized. Awaiting SRE telemetry trigger...']
+  logs: ['System daemon online. Monitoring cluster telemetry...']
 };
 
 export function updateAgentState(newState: Partial<typeof currentAgentState>) {
   currentAgentState = { ...currentAgentState, ...newState };
 }
 
-// API endpoint for UI to fetch live state from SQLite / Agent memory
 app.get('/api/state', (req, res) => {
   try {
     const db = new Database('aegistether-state.db', { readonly: true });
@@ -38,30 +38,51 @@ app.get('/api/state', (req, res) => {
       });
       return;
     }
-  } catch (e) {
-    // Fallback if DB is locked or uninitialized
-  }
+  } catch (e) {}
   res.json(currentAgentState);
 });
 
-let approvalCallback: (() => void) | null = null;
+app.get('/api/history', (req, res) => {
+  try {
+    const db = new Database('aegistether-state.db', { readonly: true });
+    const records = db.prepare('SELECT * FROM incident_state ORDER BY id DESC LIMIT 5').all();
+    res.json(records);
+  } catch (e) {
+    res.json([]);
+  }
+});
 
-app.post('/api/approve', (req, res) => {
-  console.log("\n[AegisTether UI] Authorization token verified. Triggering remediation...");
-  res.json({ success: true, message: "Remediation dispatched." });
+// Webhook endpoint to trigger an incident live from the UI
+app.post('/api/trigger-incident', async (req, res) => {
+  const { alert } = req.body;
+  const prompt = alert || "CRITICAL ALERT: Datadog APM has detected a 45.2% 5xx error rate spike on payment-gateway.";
   
+  console.log(`\n[AegisTether Webhook] External alert received via API: "${prompt}"`);
+  res.json({ success: true, message: "Incident investigation dispatched." });
+
+  dispatchIncident(prompt);
+});
+
+let approvalCallback: ((approved: boolean) => void) | null = null;
+
+app.post('/api/action', (req, res) => {
+  const { action } = req.body;
+  const isApproved = action === 'APPROVE';
+  
+  console.log(`\n[AegisTether UI] SRE Gate Action Received: ${action}`);
+  res.json({ success: true, action });
+
   if (approvalCallback) {
-    approvalCallback();
+    approvalCallback(isApproved);
     approvalCallback = null;
   }
 });
 
-export function startApprovalGate(onApproval: () => void) {
+export function startApprovalGate(onApproval: (approved: boolean) => void) {
   approvalCallback = onApproval;
-  
-  const server = app.listen(port, () => {
-    console.log(`\n[AegisTether Gateway] Production SRE Console live at http://localhost:${port}`);
-  });
-
-  return server;
 }
+
+// Automatically start the Express server when running ui/server.ts directly
+app.listen(port, () => {
+  console.log(`[AegisTether Gateway] Production SRE Bastion live at http://localhost:${port}`);
+});
